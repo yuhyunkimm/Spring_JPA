@@ -11,8 +11,7 @@ import javax.validation.constraints.NotNull;
 
 public class AccountRequest {
 
-    @Setter
-    @Getter
+    @Setter @Getter
     public static class SaveDTO {
         @NotNull
         @Digits(integer = 4, fraction = 0)
@@ -32,8 +31,7 @@ public class AccountRequest {
         }
     }
 
-    @Setter
-    @Getter
+    @Setter @Getter
     public static class TransferDTO {
         @NotNull
         @Digits(integer = 4, fraction = 0)
