@@ -6,6 +6,7 @@ import shop.mtcoding.servicebank.model.account.Account;
 import shop.mtcoding.servicebank.model.user.User;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class AccountRequest {
@@ -44,6 +45,7 @@ public class AccountRequest {
         @Digits(integer = 4, fraction = 0)
         private Integer withdrawPassword;
         @NotNull
+        @Min(value = 1, message = "금액은 0원 이하일 수 없습니다.")
         private Long amount;
     }
 
