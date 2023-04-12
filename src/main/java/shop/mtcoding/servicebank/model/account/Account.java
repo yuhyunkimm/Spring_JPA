@@ -36,7 +36,6 @@ public class Account {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -72,7 +71,7 @@ public class Account {
     }
 
     public void checkSamePassword(Integer password) {
-        if (this.password != password) {
+        if (!this.password.equals(password)) {
             throw new Exception401("계좌 비밀번호 검증에 실패했습니다");
         }
     }
