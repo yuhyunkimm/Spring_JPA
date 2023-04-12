@@ -10,6 +10,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import shop.mtcoding.servicebank.core.exception.Exception400;
 import shop.mtcoding.servicebank.core.exception.Exception401;
 import shop.mtcoding.servicebank.core.exception.Exception403;
+import shop.mtcoding.servicebank.core.exception.Exception404;
 import shop.mtcoding.servicebank.dto.ResponseDTO;
 
 @Slf4j
@@ -32,6 +33,13 @@ public class MyExceptionAdvice {
         return new ResponseEntity<>(e.body(), e.status());
     }
 
+    // 자원을 못찾으면!!
+    @ExceptionHandler(Exception404.class)
+    public ResponseEntity<?> notFound(Exception404 e){
+        return new ResponseEntity<>(e.body(), e.status());
+    }
+
+    // 주소를 못찾으면!!
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> notFound(NoHandlerFoundException e){
         ResponseDTO<String> responseDto = new ResponseDTO<>();

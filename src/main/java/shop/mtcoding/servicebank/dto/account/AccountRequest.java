@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class AccountRequest {
 
     @Setter @Getter
-    public static class SaveDTO {
+    public static class SaveInDTO {
         @NotNull
         @Digits(integer = 4, fraction = 0)
         private Integer number;
@@ -32,7 +32,7 @@ public class AccountRequest {
     }
 
     @Setter @Getter
-    public static class TransferDTO {
+    public static class TransferInDTO {
         @NotNull
         @Digits(integer = 4, fraction = 0)
         private Integer withdrawNumber;

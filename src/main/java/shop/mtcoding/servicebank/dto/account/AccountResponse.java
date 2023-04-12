@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 public class AccountResponse {
 
     @Setter @Getter
-    public static class SaveDTO {
+    public static class SaveOutDTO {
         private Long id;
         private Integer number;
         private Long balance;
 
-        public SaveDTO(Account account) {
+        public SaveOutDTO(Account account) {
             this.id = account.getId();
             this.number = account.getNumber();
             this.balance = account.getBalance();
@@ -26,11 +26,28 @@ public class AccountResponse {
     }
 
     @Setter @Getter
-    public static class ListDTO {
+    public static class DetailOutDTO {
+        private Long id;
+        private String fullName;
+        private Integer number;
+        private Long balance;
+        private String createdAt;
+
+        public DetailOutDTO(Account account) {
+            this.id = account.getId();
+            this.fullName = account.getUser().getFullName();
+            this.number = account.getNumber();
+            this.balance = account.getBalance();
+            this.createdAt = MyDateUtils.toStringFormat(account.getCreatedAt());
+        }
+    }
+
+    @Setter @Getter
+    public static class ListOutDTO {
         private String fullName;
         private List<AccountDTO> accounts;
 
-        public ListDTO(User user, List<Account> accounts) {
+        public ListOutDTO(User user, List<Account> accounts) {
             this.fullName = user.getFullName();
             this.accounts = accounts.stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
         }
@@ -48,16 +65,16 @@ public class AccountResponse {
             }
         }
     }
-    
-    // 계좌 주인은 sender
-    @Setter @Getter
-    public static class WithdrawDTO {
+
+    @Setter
+    @Getter
+    public static class TransferOutDTO {
         private Long id;
-        private Integer number; // 계좌번호
-        private Long balance; // 현재 잔액
+        private Integer number;
+        private Long balance;
         private TransactionDTO transaction;
 
-        public WithdrawDTO(Account account, Transaction transaction) {
+        public TransferOutDTO(Account account, Transaction transaction) {
             this.id = account.getId();
             this.number = account.getNumber();
             this.balance = account.getBalance();
@@ -71,7 +88,7 @@ public class AccountResponse {
             private String sender;
             private String receiver;
             private Long amount;
-            private Long balance; // 이체시점 잔액
+            private Long balance;
             private String createdAt;
 
             public TransactionDTO(Transaction transaction) {
@@ -84,81 +101,4 @@ public class AccountResponse {
             }
         }
     }
-
-    // 계좌 주인은 receiver
-    @Setter @Getter
-    public static class DepositDTO {
-        private Long id;
-        private Integer number; // 계좌번호
-        private Long balance; // 잔액
-        private TransactionDTO transaction;
-
-        public DepositDTO(Account account, Transaction transaction) {
-            this.id = account.getId();
-            this.number = account.getNumber();
-            this.balance = account.getBalance();
-            this.transaction = new TransactionDTO(transaction);
-        }
-
-        @Setter
-        @Getter
-        public class TransactionDTO {
-            private Long id;
-            private String sender;
-            private String receiver;
-            private Long amount;
-            private Long balance;
-            private String createdAt;
-
-            public TransactionDTO(Transaction transaction) {
-                this.id = transaction.getId();
-                this.sender = transaction.getWithdrawAccount().getNumber()+"";
-                this.receiver = transaction.getDepositAccount().getNumber()+"";
-                this.amount = transaction.getAmount();
-                this.balance = transaction.getDepositAccountBalance();
-                this.createdAt = MyDateUtils.toStringFormat(transaction.getCreatedAt());
-            }
-        }
-    }
-
-    // 계좌주인은 상황에 따라 다름 (출금 or 입금)
-    @Setter @Getter
-    public static class WithDrawAndDepositDTO {
-        private Long id;
-        private Integer number; // 계좌번호
-        private Long balance; // 잔액
-        private TransactionDTO transaction;
-
-        public WithDrawAndDepositDTO(Account account, Transaction transaction) {
-            this.id = account.getId();
-            this.number = account.getNumber();
-            this.balance = account.getBalance();
-            this.transaction = new TransactionDTO(transaction, account);
-        }
-
-        @Setter
-        @Getter
-        public class TransactionDTO {
-            private Long id;
-            private String sender;
-            private String receiver;
-            private Long amount;
-            private Long balance;
-            private String createdAt;
-
-            public TransactionDTO(Transaction transaction, Account account) {
-                this.id = transaction.getId();
-                this.sender = transaction.getWithdrawAccount().getNumber()+"";
-                this.receiver = transaction.getDepositAccount().getNumber()+"";
-                this.amount = transaction.getAmount();
-                if(account.getNumber() == transaction.getWithdrawAccount().getNumber()){
-                    this.balance = transaction.getWithdrawAccountBalance();
-                }else{
-                    this.balance = transaction.getDepositAccountBalance();
-                }
-                this.createdAt = MyDateUtils.toStringFormat(transaction.getCreatedAt());
-            }
-        }
-    }
-
 }
