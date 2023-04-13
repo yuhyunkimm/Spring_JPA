@@ -52,7 +52,7 @@ public class AccountService {
 
         // 2. 유저 계좌목록 조회
         List<Account> accountListPS = accountRepository.findByUserId(userId);
-        
+
         // 3. DTO 응답
         return new AccountResponse.ListOutDTO(userPS, accountListPS);
     }

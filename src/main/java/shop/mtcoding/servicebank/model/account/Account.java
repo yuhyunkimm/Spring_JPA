@@ -6,10 +6,12 @@ import lombok.NoArgsConstructor;
 import shop.mtcoding.servicebank.core.exception.Exception400;
 import shop.mtcoding.servicebank.core.exception.Exception401;
 import shop.mtcoding.servicebank.core.exception.Exception403;
+import shop.mtcoding.servicebank.model.transaction.Transaction;
 import shop.mtcoding.servicebank.model.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter

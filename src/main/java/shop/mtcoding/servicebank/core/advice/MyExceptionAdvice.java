@@ -18,6 +18,7 @@ import shop.mtcoding.servicebank.dto.ResponseDTO;
 @RestControllerAdvice
 public class MyExceptionAdvice {
 
+    
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e){
         return new ResponseEntity<>(e.body(), e.status());
