@@ -17,12 +17,14 @@ public class TransactionResponse {
         private Long id;
         private Integer number; // 계좌번호
         private Long balance; // 현재 잔액
+        private String fullName;
         private List<TransactionDTO> transactions;
 
         public WithdrawOutDTO(Account account, List<Transaction> transactions) {
             this.id = account.getId();
             this.number = account.getNumber();
             this.balance = account.getBalance();
+            this.fullName = account.getUser().getFullName();
             this.transactions = transactions.stream().map((transaction -> new TransactionDTO(transaction))).collect(Collectors.toList());
         }
 
@@ -54,12 +56,14 @@ public class TransactionResponse {
         private Long id;
         private Integer number; // 계좌번호
         private Long balance; // 잔액
+        private String fullName;
         private List<TransactionDTO> transactions;
 
         public DepositOutDTO(Account account, List<Transaction> transactions) {
             this.id = account.getId();
             this.number = account.getNumber();
             this.balance = account.getBalance();
+            this.fullName = account.getUser().getFullName();
             this.transactions = transactions.stream().map((transaction -> new TransactionDTO(transaction))).collect(Collectors.toList());
         }
 
@@ -91,12 +95,14 @@ public class TransactionResponse {
         private Long id;
         private Integer number; // 계좌번호
         private Long balance; // 잔액
+        private String fullName;
         private List<TransactionDTO> transactions;
 
         public WithDrawAndDepositOutDTO(Account account, List<Transaction> transactions) {
             this.id = account.getId();
             this.number = account.getNumber();
             this.balance = account.getBalance();
+            this.fullName = account.getUser().getFullName();
             this.transactions = transactions.stream().map((transaction -> new TransactionDTO(transaction, account))).collect(Collectors.toList());
         }
 
