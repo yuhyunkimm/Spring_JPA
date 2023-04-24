@@ -10,6 +10,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserRequest {
+
     @Setter
     @Getter
     public static class LoginInDTO {
@@ -21,8 +22,7 @@ public class UserRequest {
         private String password;
     }
 
-    @Setter
-    @Getter
+    @Setter @Getter
     public static class JoinInDTO {
         @Pattern(regexp = "^[a-zA-Z0-9]{2,20}$", message = "영문/숫자 2~20자 이내로 작성해주세요")
         @NotEmpty

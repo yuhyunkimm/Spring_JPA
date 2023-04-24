@@ -7,10 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import shop.mtcoding.servicebank.core.exception.Exception400;
-import shop.mtcoding.servicebank.core.exception.Exception401;
-import shop.mtcoding.servicebank.core.exception.Exception403;
-import shop.mtcoding.servicebank.core.exception.Exception404;
+import shop.mtcoding.servicebank.core.exception.*;
 import shop.mtcoding.servicebank.dto.ResponseDTO;
 
 @Slf4j
@@ -18,6 +15,7 @@ import shop.mtcoding.servicebank.dto.ResponseDTO;
 @RestControllerAdvice
 public class MyExceptionAdvice {
 
+    
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e){
         return new ResponseEntity<>(e.body(), e.status());
@@ -33,20 +31,23 @@ public class MyExceptionAdvice {
         return new ResponseEntity<>(e.body(), e.status());
     }
 
-    // 자원 못찾을 때
+    // 자원을 못찾으면!!
     @ExceptionHandler(Exception404.class)
     public ResponseEntity<?> notFound(Exception404 e){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(HttpStatus.NOT_FOUND, "notFound", e.getMessage());
-        return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e.body(), e.status());
     }
 
-    // URL 못찾을 때
+    // 주소를 못찾으면!!
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> notFound(NoHandlerFoundException e){
         ResponseDTO<String> responseDto = new ResponseDTO<>();
         responseDto.fail(HttpStatus.NOT_FOUND, "notFound", e.getMessage());
         return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception500.class)
+    public ResponseEntity<?> serverError(Exception500 e){
+        return new ResponseEntity<>(e.body(), e.status());
     }
 
     // 나머지 모든 예외는 이 친구에게 다 걸러진다
