@@ -27,6 +27,7 @@ public class AccountService {
 
     @Transactional
     public AccountResponse.SaveOutDTO 계좌등록(AccountRequest.SaveInDTO saveInDTO, Long userId) {
+
         // 1. 회원 존재 여부
         User userPS = userRepository.findById(userId).orElseThrow(
                 () -> new Exception404("유저를 찾을 수 없습니다"));
